@@ -17,7 +17,7 @@ https://www.figma.com/file/4fQe1lEbo4DARjvNtaU0uJ/Aviasales-test-task
 
 Залогинься, чтобы видеть CSS-свойства элементов
 
-![](search_preview.png?raw=true)
+![](https://raw.githubusercontent.com/KosyanMedia/test-tasks/master/aviasales_frontend/search_preview.png)
 
 Удачи! Если будут какие-то вопросы, пиши – добавим уточнения в репу.
 
