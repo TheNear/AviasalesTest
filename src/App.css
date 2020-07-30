@@ -29,8 +29,15 @@
 
 .filter {
   grid-area: filter;
+  width: 100%;
+  overflow: hidden;
   justify-self: start;
+}
+
+.filter-inner {
+  width: 100%;
   background-color: aquamarine;
+  word-wrap: break-word;
 }
 
 .sort {

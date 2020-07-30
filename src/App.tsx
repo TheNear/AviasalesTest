@@ -10,10 +10,12 @@ function App(): JSX.Element {
       </header>
       <main className="content-wrapper">
         <div className="filter">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci,accusamus!
+          <div className="filter-inner">
+            21323sjadjaskdbasjkdjkashdjkshadjkhasjkdhjsadhjksahdjk
+          </div>
         </div>
         <div className="sort">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo, officiis.
+          Lorem ipsum dolor sit amet. ASfsd sadfds sfds sfsda.
         </div>
         <div className="tickets">
           <div className="ticket">sdafsadf</div>
