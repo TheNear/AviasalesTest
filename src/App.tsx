@@ -25,6 +25,7 @@ function App(): JSX.Element {
                     name="filter__all-transfer"
                     value="all-transfer"
                   />
+                  <span className="filter__item__checkbox" />
                   Все
                 </label>
               </li>
@@ -40,6 +41,7 @@ function App(): JSX.Element {
                     name="filter__without-transfer"
                     value="without-transfer"
                   />
+                  <span className="filter__item__checkbox" />
                   Без пересадок
                 </label>
               </li>
@@ -55,7 +57,7 @@ function App(): JSX.Element {
                     name="filter__one-transfer"
                     value="one-transfer"
                   />
-                  1 пересадка
+                  <span className="filter__item__checkbox" />1 пересадка
                 </label>
               </li>
               <li className="filter__item">
@@ -70,7 +72,7 @@ function App(): JSX.Element {
                     name="filter__two-transfer"
                     value="two-transfer"
                   />
-                  2 пересадки
+                  <span className="filter__item__checkbox" />2 пересадки
                 </label>
               </li>
               <li className="filter__item">
@@ -85,7 +87,7 @@ function App(): JSX.Element {
                     name="filter__three-transfer"
                     value="three-transfer"
                   />
-                  3 пересадки
+                  <span className="filter__item__checkbox" />3 пересадки
                 </label>
               </li>
             </ul>
