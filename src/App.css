@@ -73,6 +73,7 @@ body {
   padding: 10px 20px 10px 50px;
   font-size: 13px;
   cursor: pointer;
+  user-select: none;
 }
 
 .filter__item__label:hover {
@@ -125,7 +126,43 @@ body {
 
 .sort {
   grid-area: sort;
-  background-color: chartreuse;
+  display: flex;
+  height: 50px;
+}
+
+.sort__button {
+  flex-grow: 1;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+  background-color: #FFFFFF;
+  color: #4A4A4A;
+  border: 1px solid #DFE5EC;
+  cursor: pointer;
+}
+
+.sort__button:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.sort__button:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.sort__button.active {
+  color: white;
+  border: 1px solid #2196F3;
+  background-color: #2196F3;
+}
+
+.sort__button:focus {
+  outline: none;
+  box-shadow: 0 0 4px 1px #3f3f3f96;
+}
+
+.sort__button.active:focus {
+  box-shadow: 0 0 4px 1px #2196f3cc;
 }
 
 /* БИЛЕТЫ */
@@ -135,9 +172,49 @@ body {
 }
 
 .ticket {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   margin-bottom: 20px;
   padding: 20px;
   border-radius: 5px;
   background-color: #ffffff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ticket__price {
+  grid-column: 1 / span 2;
+  margin-bottom: 5px;
+  line-height: 24px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #2196F3;
+  align-self: center;
+}
+
+.ticket__img {
+  align-self: center;
+  margin-bottom: 5px;
+}
+
+.ticket__info {
+  padding: 5px 0;
+  /* grid-area: info; */
+}
+
+.ticket__info__title {
+  text-transform: uppercase;
+  line-height: 18px;
+  letter-spacing: 0.5px;
+  color: #A0B0B9;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.ticket__info__text {
+  text-transform: uppercase;
+  line-height: 21px;
+  font-weight: 600;
+  font-size: 14px;
 }

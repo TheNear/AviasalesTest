@@ -94,12 +94,110 @@ function App(): JSX.Element {
           </div>
         </div>
         <div className="sort">
-          Lorem ipsum dolor sit amet. ASfsd sadfds sfds sfsda.
+          <button type="button" className="sort__button active">
+            Самый дешевый
+          </button>
+          <button type="button" className="sort__button">
+            Самый быстрый
+          </button>
         </div>
         <div className="tickets">
-          <div className="ticket">sdafsadf</div>
-          <div className="ticket">sdafsadf</div>
-          <div className="ticket">sdafsadf</div>
+          <div className="ticket">
+            <div className="ticket__price">13 400 P</div>
+            <img
+              className="ticket__img"
+              src="http://pics.avs.io/99/36/S7.png"
+              alt="airport"
+            />
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+          </div>
+          <div className="ticket">
+            <div className="ticket__price">13 400 P</div>
+            <img
+              className="ticket__img"
+              src="http://pics.avs.io/99/36/S7.png"
+              alt="airport"
+            />
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+          </div>
+          <div className="ticket">
+            <div className="ticket__price">13 400 P</div>
+            <img
+              className="ticket__img"
+              src="http://pics.avs.io/99/36/S7.png"
+              alt="airport"
+            />
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+            <div className="ticket__info">
+              <div className="ticket__info__title">В пути</div>
+              <div className="ticket__info__text">10:50 - 08:00</div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
