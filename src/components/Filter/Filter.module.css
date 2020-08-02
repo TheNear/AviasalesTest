@@ -1,0 +1,23 @@
+.filter {
+  grid-area: filter;
+  width: 100%;
+  overflow: hidden;
+  justify-self: start;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); 
+  word-wrap: break-word;
+}
+
+.title {
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: inherit;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}

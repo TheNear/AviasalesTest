@@ -1,0 +1,34 @@
+.button {
+  flex-grow: 1;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+  background-color: #FFFFFF;
+  color: #4A4A4A;
+  border: 1px solid #DFE5EC;
+  cursor: pointer;
+}
+
+.button:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.button:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.button.active {
+  color: white;
+  border: 1px solid #2196F3;
+  background-color: #2196F3;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 4px 1px #3f3f3f96;
+}
+
+.button.active:focus {
+  box-shadow: 0 0 4px 1px #2196f3cc;
+}

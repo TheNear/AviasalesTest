@@ -1,10 +1,14 @@
 import React from "react";
+import style from "./TecketsList.module.css";
+import Ticket from "../Ticket/Ticket";
 
 function TicketsList(): JSX.Element {
   return (
-    <div>
-      <div />
-    </div>
+    <ul className={style.tickets}>
+      <Ticket />
+      <Ticket />
+      <Ticket />
+    </ul>
   );
 }
 

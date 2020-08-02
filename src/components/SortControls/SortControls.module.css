@@ -1,0 +1,5 @@
+.sort {
+  grid-area: sort;
+  display: flex;
+  height: 50px;
+}

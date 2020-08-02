@@ -1,10 +1,11 @@
 import React from "react";
+import style from "./Button.module.css";
 
 function Button(): JSX.Element {
   return (
-    <div>
-      <div />
-    </div>
+    <button type="button" className={`${style.button} ${style.active}`}>
+      Самый дешевый
+    </button>
   );
 }
 
