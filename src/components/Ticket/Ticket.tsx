@@ -2,7 +2,7 @@ import React from "react";
 import TicketInfo from "../../componentsHelper/TicketInfo/TicketInfo";
 import style from "./Ticket.module.css";
 
-function Ticket(): JSX.Element {
+const Ticket: React.FC = () => {
   return (
     <li className={style.ticket}>
       <div className={style.price}>13 400 P</div>
@@ -19,6 +19,6 @@ function Ticket(): JSX.Element {
       <TicketInfo />
     </li>
   );
-}
+};
 
 export default Ticket;

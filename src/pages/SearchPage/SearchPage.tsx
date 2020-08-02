@@ -4,7 +4,7 @@ import Filter from "../../components/Filter/Filter";
 import SortControls from "../../components/SortControls/SortControls";
 import TicketsList from "../../components/TicketsList/TicketsList";
 
-function SearchPage(): JSX.Element {
+const SearchPage: React.FC = () => {
   return (
     <main className={style.container}>
       <Filter />
@@ -12,6 +12,6 @@ function SearchPage(): JSX.Element {
       <TicketsList />
     </main>
   );
-}
+};
 
 export default SearchPage;

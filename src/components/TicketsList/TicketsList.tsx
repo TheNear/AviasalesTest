@@ -2,7 +2,7 @@ import React from "react";
 import style from "./TecketsList.module.css";
 import Ticket from "../Ticket/Ticket";
 
-function TicketsList(): JSX.Element {
+const TicketsList: React.FC = () => {
   return (
     <ul className={style.tickets}>
       <Ticket />
@@ -10,6 +10,6 @@ function TicketsList(): JSX.Element {
       <Ticket />
     </ul>
   );
-}
+};
 
 export default TicketsList;

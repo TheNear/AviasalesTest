@@ -1,12 +1,20 @@
 import React from "react";
 import style from "./Button.module.css";
 
-function Button(): JSX.Element {
+interface IButton {
+  text: string;
+  active?: boolean;
+}
+
+const Button: React.FC<IButton> = ({ text, active }) => {
   return (
-    <button type="button" className={`${style.button} ${style.active}`}>
-      Самый дешевый
+    <button
+      type="button"
+      className={`${style.button} ${active ? style.active : null}`}
+    >
+      {text}
     </button>
   );
-}
+};
 
 export default Button;

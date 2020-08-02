@@ -1,22 +1,27 @@
 import React from "react";
 import style from "./CheckBox.module.css";
 
-function CheckBox(): JSX.Element {
+interface ICheckBox {
+  text: string;
+  name: string;
+}
+
+const CheckBox: React.FC<ICheckBox> = ({ text, name }) => {
   return (
     <li>
-      <label className={style.label} htmlFor="filter__all-transfer">
+      <label className={style.label} htmlFor={name}>
         <input
           type="checkbox"
           className={style.input}
-          id="filter__all-transfer"
-          name="filter__all-transfer"
-          value="all-transfer"
+          id={name}
+          name={name}
+          value={name}
         />
         <span className={style.checkbox} />
-        Все
+        {text}
       </label>
     </li>
   );
-}
+};
 
 export default CheckBox;

@@ -1,21 +1,21 @@
 import React from "react";
 import style from "./Filter.module.css";
 import CheckBox from "../../componentsHelper/CheckBox/CheckBox";
+import { filterList, IFilterItem } from "./filterList";
 
-function Filter(): JSX.Element {
+const Filter: React.FC = () => {
   return (
     <div className={style.filter}>
       <div className={style.wrapper}>
         <h3 className={style.title}>Количество пересадок</h3>
         <ul>
-          <CheckBox />
-          <CheckBox />
-          <CheckBox />
-          <CheckBox />
+          {filterList.map((filter: IFilterItem) => (
+            <CheckBox key={filter.name} text={filter.text} name={filter.name} />
+          ))}
         </ul>
       </div>
     </div>
   );
-}
+};
 
 export default Filter;

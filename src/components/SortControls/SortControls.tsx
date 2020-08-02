@@ -2,19 +2,13 @@ import React from "react";
 import style from "./SortControls.module.css";
 import Button from "../../componentsHelper/Button/Button";
 
-function SortControls(): JSX.Element {
+const SortControls: React.FC = () => {
   return (
     <div className={style.sort}>
-      {/* <button type="button" className="sort__button active">
-        Самый дешевый
-      </button>
-      <button type="button" className="sort__button">
-        Самый быстрый
-      </button> */}
-      <Button />
-      <Button />
+      <Button text="Самый дешевый" active />
+      <Button text="Самый быстрый" />
     </div>
   );
-}
+};
 
 export default SortControls;

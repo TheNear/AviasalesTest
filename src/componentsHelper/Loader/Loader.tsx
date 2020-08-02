@@ -1,11 +1,11 @@
 import React from "react";
 
-function Loader(): JSX.Element {
+const Loader: React.FC = () => {
   return (
     <div>
       <div />
     </div>
   );
-}
+};
 
 export default Loader;
