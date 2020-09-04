@@ -1,0 +1,21 @@
+.wrapper {
+  margin-bottom: 20px;
+  padding: 5px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image {
+  margin-left: 20px;
+  height: 30px;
+  width: 30px;
+}
+
+.text {
+  color: #4A4A4A;
+  font-family: inherit;
+}
