@@ -1,19 +1,32 @@
 import React from "react";
 import style from "./TecketsList.module.css";
-import Ticket from "../Ticket/Ticket";
-import Loader from "../../componentsHelper/Loader/Loader";
+import { Loader } from "../../componentsHelper/Loader/Loader";
+import { Error } from "../../componentsHelper/Error/Error";
+import { ITicketItem, Ticket } from "../Ticket/Ticket";
 
 interface ITicketsList {
+  tickets: Array<ITicketItem>;
   isLoading: boolean;
+  hasError: string;
+  refreshTicketsList: () => void;
 }
 
-const TicketsList: React.FC<ITicketsList> = ({ isLoading }) => {
+const TicketsList: React.FC<ITicketsList> = ({
+  tickets,
+  isLoading,
+  hasError,
+  refreshTicketsList,
+}) => {
   return (
     <ul className={style.tickets}>
       {isLoading && <Loader />}
-      <Ticket />
-      <Ticket />
-      {/* <Ticket /> */}
+      {!isLoading && hasError && <Error refreshTicketsList={refreshTicketsList} />}
+      {tickets.map((ticket: ITicketItem) => (
+        <Ticket
+          key={`${ticket.price}${ticket.segments[0].date}${ticket.carrier}`}
+          ticket={ticket}
+        />
+      ))}
     </ul>
   );
 };

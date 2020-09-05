@@ -10,13 +10,7 @@ const CheckBox: React.FC<ICheckBox> = ({ text, name }) => {
   return (
     <li>
       <label className={style.label} htmlFor={name}>
-        <input
-          type="checkbox"
-          className={style.input}
-          id={name}
-          name={name}
-          value={name}
-        />
+        <input type="checkbox" className={style.input} id={name} name={name} value={name} />
         <span className={style.checkbox} />
         {text}
       </label>

@@ -1,5 +1,6 @@
 import React from "react";
 import TicketInfo from "../../componentsHelper/TicketInfo/TicketInfo";
+import commonStyle from "../../assets/css/common.module.css";
 import style from "./Ticket.module.css";
 
 export interface ITicketItem {
@@ -37,13 +38,19 @@ export interface ITicketItem {
   ];
 }
 
-const Ticket: React.FC = () => {
+interface ITicket {
+  ticket: ITicketItem;
+}
+
+const Ticket: React.FC<ITicket> = ({ ticket }) => {
+  // console.log(ticket);
+
   return (
-    <li className={style.ticket}>
+    <li className={`${style.ticket} ${commonStyle.box}`}>
       <div className={style.price}>13 400 P</div>
       <img
         className={style.image}
-        src="http://pics.avs.io/99/36/S7.png"
+        src={`http://pics.avs.io/99/36/${ticket.carrier}.png`}
         alt="airport"
       />
       <TicketInfo />
@@ -56,4 +63,4 @@ const Ticket: React.FC = () => {
   );
 };
 
-export default Ticket;
+export { Ticket };

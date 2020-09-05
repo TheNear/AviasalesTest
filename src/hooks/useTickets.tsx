@@ -8,7 +8,6 @@ interface IUseTickets {
   isLoading: boolean;
   errors: string;
   refreshTicketsList: () => void;
-  resetErrors: () => void;
 }
 
 const useTickets = (): IUseTickets => {
@@ -60,10 +59,6 @@ const useTickets = (): IUseTickets => {
     }
   }, [getTicketsList, getSearchToken]);
 
-  const resetErrors = () => {
-    setError("");
-  };
-
   useEffect(() => {
     refreshTicketsList();
   }, [refreshTicketsList]);
@@ -73,7 +68,6 @@ const useTickets = (): IUseTickets => {
     isLoading,
     errors,
     refreshTicketsList,
-    resetErrors,
   };
 };
 
