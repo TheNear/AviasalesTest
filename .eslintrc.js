@@ -29,6 +29,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    // "prettier.printWidth": 100,
     "import/prefer-default-export": 0,
     "react/prop-types": 0,
     'linebreak-style': 'off',
@@ -36,6 +37,7 @@ module.exports = {
       'error',
       {
         endOfLine: 'auto',
+        printWidth: 100,
       },
     ],
   },

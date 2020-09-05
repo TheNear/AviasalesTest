@@ -10,7 +10,10 @@ const SearchPage: React.FC = () => {
 
   useEffect(() => {
     console.log(tickets);
-  }, [tickets]);
+    if (errors) {
+      console.log(errors);
+    }
+  }, [tickets, errors]);
 
   return (
     <main className={style.container}>
