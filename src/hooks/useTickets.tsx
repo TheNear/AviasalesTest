@@ -10,17 +10,25 @@ const useTickets = () => {
   const [errors, setError] = useState<string>("");
 
   const getTicketsPart = async () => {
-    const response = await axios(
-      `${BASE_URL}tickets?searchId=${searchToken}`,
-      GET_CONFIG
-    );
-    setTickets(response.data.tickets);
-    setIsLoading(!response.data.stop);
+    try {
+      const response = await axios(
+        `${BASE_URL}tickets?searchId=${searchToken}`,
+        GET_CONFIG
+      );
+      setTickets(response.data.tickets);
+      setIsLoading(!response.data.stop);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const getSearchToken = async () => {
-    const response = await axios(`${BASE_URL}search`, GET_CONFIG);
-    setSearchToken(response.data.searchId);
+    try {
+      const response = await axios(`${BASE_URL}search`, GET_CONFIG);
+      setSearchToken(response.data.searchId);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return {
