@@ -17,38 +17,41 @@ const useTickets = (): IUseTickets => {
 
   const getTicketsPart = useCallback(async () => {
     try {
-      const response = await axios(
+      const res = await axios(
         `${BASE_URL}tickets?searchId=${searchToken}`,
         GET_CONFIG
       );
-      setIsLoading(!response.data.stop);
-      setTickets((state) => state.concat(response.data.tickets));
-    } catch (error) {
-      if (error.response.status === 500) {
+      setError("");
+      console.log(errors);
+      console.log(res.data.stop);
+      setIsLoading(!res.data.stop);
+      setTickets((state) => state.concat(res.data.tickets));
+      if (!res.data.stop) {
         getTicketsPart();
       }
+    } catch (err) {
+      console.log('s');
     }
   }, [searchToken]);
 
   const getSearchToken = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios(`${BASE_URL}search`, GET_CONFIG);
-      setSearchToken(response.data.searchId);
-    } catch (error) {
-      setError(error.message);
-    }
+    const res = await axios(`${BASE_URL}search`, GET_CONFIG);
+    const token: string = await res.data.searchId;
+    setSearchToken(token);
   }, []);
 
-  useEffect(() => {
-    if (searchToken && isLoading) {
+  const getTicketsList = useCallback(() => {
+    setIsLoading(true);
+    if (!searchToken) {
+      getSearchToken();
+    } else {
       getTicketsPart();
     }
-  }, [searchToken, getTicketsPart, isLoading, tickets]);
+  }, [getSearchToken, getTicketsPart, searchToken]);
 
   useEffect(() => {
-    getSearchToken();
-  }, [getSearchToken]);
+    getTicketsList();
+  }, [getTicketsList]);
 
   return {
     tickets,
