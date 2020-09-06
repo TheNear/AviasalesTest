@@ -1,3 +1,7 @@
+const formatTimeNumbers = (number: number): string => {
+  return number < 10 ? `0${number}` : `${number}`;
+};
+
 export const stopsFormat: Array<string> = [
   "Без пересадок",
   "1 Пересадка",
@@ -17,8 +21,21 @@ export const convertPrice = (number: number): string => {
 };
 
 export const getTravelTime = (time: number): string => {
-  const dateObj = new Date(time * 1000 * 60);
-  const hours = dateObj.getHours();
-  const minutes = dateObj.getMinutes();
+  const minutes = time % 60;
+  const hours = (time - minutes) / 60;
   return `${hours}ч ${minutes}м`;
-}
+};
+
+export const getLandingTime = (date: string, time: number): string => {
+  const fromTimestamp = Date.parse(date);
+  const fromDate = new Date(date);
+  const toTimeStamp = fromTimestamp + time * 60 * 1000;
+  const toDate = new Date(toTimeStamp);
+  const fromHours = formatTimeNumbers(fromDate.getHours());
+  const toHours = formatTimeNumbers(toDate.getHours());
+  const toMinutes = formatTimeNumbers(toDate.getMinutes());
+  const fromMinutes = formatTimeNumbers(fromDate.getMinutes());
+  const fromString = `${fromHours}:${fromMinutes}`;
+  const toString = `${toHours}:${toMinutes}`;
+  return `${fromString} - ${toString}`;
+};

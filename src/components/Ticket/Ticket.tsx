@@ -2,7 +2,7 @@ import React from "react";
 import TicketInfo from "../../componentsHelper/TicketInfo/TicketInfo";
 import commonStyle from "../../assets/css/common.module.css";
 import style from "./Ticket.module.css";
-import { stopsFormat, convertPrice, getTravelTime } from "./TicketsFormat";
+import { stopsFormat, convertPrice, getTravelTime, getLandingTime } from "./TicketsFormat";
 
 export interface ITicketItem {
   // Цена в рублях
@@ -60,16 +60,16 @@ const Ticket: React.FC<ITicket> = ({ ticket }) => {
     duration: duration2,
   } = segments[1];
 
-  console.log(segments[0]);
+  console.log(ticket);
 
   return (
     <li className={`${style.ticket} ${commonStyle.box}`}>
       <div className={style.price}>{convertPrice(price)} P</div>
       <img className={style.image} src={`http://pics.avs.io/99/36/${carrier}.png`} alt="airport" />
-      <TicketInfo title={`${from1} - ${to1}`} />
+      <TicketInfo title={`${from1} - ${to1}`} text={getLandingTime(date1, duration1)} />
       <TicketInfo title="В пути" text={getTravelTime(duration1)} />
       <TicketInfo title={stopsFormat[stops1.length]} text={stops1.join()} />
-      <TicketInfo title={`${from2} - ${to2}`} />
+      <TicketInfo title={`${from2} - ${to2}`} text={getLandingTime(date2, duration2)} />
       <TicketInfo title="В пути" text={getTravelTime(duration2)} />
       <TicketInfo title={stopsFormat[stops2.length]} text={stops2.join()} />
     </li>
