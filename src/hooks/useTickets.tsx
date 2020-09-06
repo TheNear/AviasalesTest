@@ -48,6 +48,7 @@ const useTickets = (): IUseTickets => {
   }, []);
 
   const refreshTicketsList = useCallback(async () => {
+    setTickets([]);
     setIsLoading(true);
     setError("");
     try {

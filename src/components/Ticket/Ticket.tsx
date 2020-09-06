@@ -40,14 +40,15 @@ export interface ITicketItem {
 
 interface ITicket {
   ticket: ITicketItem;
+  convertPrice: (number: number) => string;
 }
 
-const Ticket: React.FC<ITicket> = ({ ticket }) => {
-  // console.log(ticket);
+const Ticket: React.FC<ITicket> = ({ ticket, convertPrice }) => {
+  console.log(ticket);
 
   return (
     <li className={`${style.ticket} ${commonStyle.box}`}>
-      <div className={style.price}>13 400 P</div>
+      <div className={style.price}>{convertPrice(ticket.price)} P</div>
       <img
         className={style.image}
         src={`http://pics.avs.io/99/36/${ticket.carrier}.png`}
