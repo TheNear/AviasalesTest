@@ -8,10 +8,7 @@ interface IButton {
 
 const Button: React.FC<IButton> = ({ text, active }) => {
   return (
-    <button
-      type="button"
-      className={`${style.button} ${active ? style.active : null}`}
-    >
+    <button type="button" className={`${style.button} ${active ? style.active : ""}`}>
       {text}
     </button>
   );
