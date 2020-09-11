@@ -60,7 +60,7 @@ const Ticket: React.FC<ITicket> = ({ ticket }) => {
     duration: duration2,
   } = segments[1];
 
-  console.log(ticket);
+  // console.log(ticket);
 
   return (
     <li className={`${style.ticket} ${commonStyle.box}`}>
