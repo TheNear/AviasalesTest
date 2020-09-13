@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test TicketsList component Render empty TicketsList 1`] = `
+<ul
+  className="tickets"
+>
+  <Ticket
+    key="182042020-10-13T13:46:00.000ZS7"
+    ticket={
+      Object {
+        "carrier": "S7",
+        "price": 18204,
+        "segments": Array [
+          Object {
+            "date": "2020-10-13T13:46:00.000Z",
+            "destination": "HKT",
+            "duration": 1544,
+            "origin": "HKT",
+            "stops": Array [
+              "SHA",
+              "DXB",
+              "HKG",
+            ],
+          },
+          Object {
+            "date": "2020-10-13T13:46:00.000Z",
+            "destination": "HKT",
+            "duration": 1944,
+            "origin": "HKT",
+            "stops": Array [
+              "SHA",
+              "DXB",
+              "HKG",
+            ],
+          },
+        ],
+      }
+    }
+  />
+  <Ticket
+    key="182042020-10-13T13:46:00.000ZS7"
+    ticket={
+      Object {
+        "carrier": "S7",
+        "price": 18204,
+        "segments": Array [
+          Object {
+            "date": "2020-10-13T13:46:00.000Z",
+            "destination": "HKT",
+            "duration": 1544,
+            "origin": "HKT",
+            "stops": Array [
+              "SHA",
+              "DXB",
+              "HKG",
+            ],
+          },
+          Object {
+            "date": "2020-10-13T13:46:00.000Z",
+            "destination": "HKT",
+            "duration": 1944,
+            "origin": "HKT",
+            "stops": Array [
+              "SHA",
+              "DXB",
+              "HKG",
+            ],
+          },
+        ],
+      }
+    }
+  />
+  <Ticket
+    key="182042020-10-13T13:46:00.000ZS7"
+    ticket={
+      Object {
+        "carrier": "S7",
+        "price": 18204,
+        "segments": Array [
+          Object {
+            "date": "2020-10-13T13:46:00.000Z",
+            "destination": "HKT",
+            "duration": 1544,
+            "origin": "HKT",
+            "stops": Array [
+              "SHA",
+              "DXB",
+              "HKG",
+            ],
+          },
+          Object {
+            "date": "2020-10-13T13:46:00.000Z",
+            "destination": "HKT",
+            "duration": 1944,
+            "origin": "HKT",
+            "stops": Array [
+              "SHA",
+              "DXB",
+              "HKG",
+            ],
+          },
+        ],
+      }
+    }
+  />
+</ul>
+`;

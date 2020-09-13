@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test SortControl component Render empty SortControls 1`] = `
+<div
+  className="sort"
+>
+  <Button
+    active={true}
+    text="Самый дешевый"
+  />
+  <Button
+    text="Самый быстрый"
+  />
+</div>
+`;
