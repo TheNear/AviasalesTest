@@ -10,14 +10,19 @@ interface IUseTickets {
   refreshTicketsList: () => void;
 }
 
-const useTickets = (): IUseTickets => {
+interface IUseTicketsProp {
+  ticketsCount: number;
+}
+
+function useTickets(ticketsCount: number): IUseTickets {
   const [tickets, setTickets] = useState<Array<ITicketItem>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errors, setError] = useState<string>("");
+  const [filtredTickets, setFiltredTickets] = useState<Array<ITicketItem>>([]);
+  const [ticketsPerPage, setTicketsPerPage] = useState<number>(ticketsCount);
 
   const getTicketsList = useCallback((token: string) => {
     let connectError = "";
-
     const getTicketsPart = async () => {
       try {
         const res = await axios(`${BASE_URL}tickets?searchId=${token}`, GET_CONFIG);
@@ -37,7 +42,6 @@ const useTickets = (): IUseTickets => {
         }
       }
     };
-
     getTicketsPart();
   }, []);
 

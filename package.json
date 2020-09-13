@@ -57,7 +57,7 @@
     "react-test-renderer": "^16.13.1",
     "ts-jest": "^26.3.0"
   },
-  "jest":{
+  "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts",

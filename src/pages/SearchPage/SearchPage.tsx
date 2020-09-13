@@ -6,7 +6,7 @@ import TicketsList from "../../components/TicketsList/TicketsList";
 import { useTickets } from "../../hooks/useTickets";
 
 const SearchPage: React.FC = () => {
-  const { tickets, isLoading, errors, refreshTicketsList } = useTickets();
+  const { tickets, isLoading, errors, refreshTicketsList } = useTickets(5);
 
   return (
     <main className={style.container}>
