@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test SearchPage component Render empty SearchPage 1`] = `
+<main
+  className="container"
+>
+  <Filter />
+  <SortControls />
+  <TicketsList
+    hasError=""
+    isLoading={false}
+    refreshTicketsList={[Function]}
+    tickets={Array []}
+  />
+</main>
+`;

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test custom Loader component Render empty Loader 1`] = `
+<div
+  className="wrapper box"
+>
+  <p
+    className="text"
+  >
+    Загружаем билеты...
+  </p>
+  <img
+    alt="loader"
+    className="image"
+    src="spinner.svg"
+  />
+</div>
+`;
