@@ -24,7 +24,8 @@
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false"
+    "test": "react-scripts test --watchAll=false",
+    "test:coverage": "react-scripts test --coverage --runInBand --watchAll=false"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,12 +52,51 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^23.18.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.0.5",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "ts-jest": "^26.3.0"
   },
-  "jest": {
+  "jest":{
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts",
+      "!src/index.tsx",
+      "!src/serviceWorker.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "./src/*/*.types.{ts,tsx}",
+      "./src/index.tsx",
+      "./src/serviceWorker.ts"
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text-summary",
+      "clover"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 0,
+        "branches": 0,
+        "lines": 0,
+        "functions": 0
+      }
+    },
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "src/(.*)$": "<rootDir>/src/$1"
+    }
   }
 }
