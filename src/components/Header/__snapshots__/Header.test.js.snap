@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Header component Render empty Header 1`] = `
+<header
+  className="header"
+>
+  <img
+    alt="Site logo"
+    className="logo"
+    src="logo.svg"
+  />
+</header>
+`;

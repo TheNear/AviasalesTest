@@ -4,17 +4,17 @@ import Button from "./Button";
 
 describe("Common Button render", () => {
   it("Render empty button", () => {
-    const button = shallow(<Button />);
-    expect(button).toMatchSnapshot();
+    const wrapper = shallow(<Button />);
+    expect(wrapper).toMatchSnapshot();
   });
 
   it("Render inactive success button", () => {
-    const button = shallow(<Button text="SUCCESS" />);
-    expect(button).toMatchSnapshot();
+    const wrapper = shallow(<Button text="SUCCESS" />);
+    expect(wrapper).toMatchSnapshot();
   });
 
   it("Render active reject button", () => {
-    const button = shallow(<Button text="REJECT" active />);
-    expect(button).toMatchSnapshot();
+    const wrapper = shallow(<Button text="REJECT" active />);
+    expect(wrapper).toMatchSnapshot();
   });
 });
