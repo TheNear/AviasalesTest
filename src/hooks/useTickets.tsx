@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
 import { BASE_URL, GET_CONFIG } from "../api/config";
 import { ITicketItem } from "../components/Ticket/Ticket";
@@ -10,24 +10,18 @@ interface IUseTickets {
   refreshTicketsList: () => void;
 }
 
-interface IUseTicketsProp {
-  ticketsCount: number;
-}
-
-const useTickets = ({ ticketsCount }: IUseTicketsProp): IUseTickets => {
+const useTickets = (): IUseTickets => {
   const [tickets, setTickets] = useState<Array<ITicketItem>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errors, setError] = useState<string>("");
-  const [filtredTickets, setFiltredTickets] = useState<Array<ITicketItem>>([]);
-  const [ticketsPerPage, setTicketsPerPage] = useState<number>(ticketsCount);
 
   const getTicketsList = useCallback((token: string) => {
     let connectError = "";
     const getTicketsPart = async () => {
       try {
         const res = await axios(`${BASE_URL}tickets?searchId=${token}`, GET_CONFIG);
-        setIsLoading(!res.data.stop);
         setTickets((state) => state.concat(res.data.tickets));
+        setIsLoading(!res.data.stop);
         connectError = "";
         if (!res.data.stop) {
           getTicketsPart();
