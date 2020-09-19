@@ -15,27 +15,39 @@ const useTickets = (): IUseTickets => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errors, setError] = useState<string>("");
 
-  const getTicketsList = useCallback((token: string) => {
-    let connectError = "";
-    const getTicketsPart = async () => {
-      try {
-        const res = await axios(`${BASE_URL}tickets?searchId=${token}`, GET_CONFIG);
+  const getTicketsPart = useCallback((token) => {
+    axios(`${BASE_URL}tickets?searchId=${token}`, GET_CONFIG)
+      .then((res) => {
         setTickets((state) => state.concat(res.data.tickets));
         setIsLoading(!res.data.stop);
-        connectError = "";
-        if (!res.data.stop) {
-          getTicketsPart();
-        }
-      } catch (err) {
-        if (connectError) {
-          setError(connectError);
-          setIsLoading(false);
-        } else {
-          connectError = err.message;
-          getTicketsPart();
-        }
-      }
-    };
+        if (!res.data.stop) getTicketsPart(token);
+      })
+      .catch((err) => {
+        return err;
+      });
+  }, []);
+
+  const getTicketsList = useCallback((token: string) => {
+    // let connectError = "";
+    // const getTicketsPart = async () => {
+    //   try {
+    //     const res = await axios(`${BASE_URL}tickets?searchId=${token}`, GET_CONFIG);
+    //     setTickets((state) => state.concat(res.data.tickets));
+    //     setIsLoading(!res.data.stop);
+    //     connectError = "";
+    //     if (!res.data.stop) {
+    //       getTicketsPart();
+    //     }
+    //   } catch (err) {
+    //     if (connectError) {
+    //       setError(connectError);
+    //       setIsLoading(false);
+    //     } else {
+    //       connectError = err.message;
+    //       getTicketsPart();
+    //     }
+    //   }
+    // };
     getTicketsPart();
   }, []);
 
