@@ -14,7 +14,7 @@ interface IUseTicketsProp {
   ticketsCount: number;
 }
 
-function useTickets(ticketsCount: number): IUseTickets {
+const useTickets = ({ ticketsCount }: IUseTicketsProp): IUseTickets => {
   const [tickets, setTickets] = useState<Array<ITicketItem>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errors, setError] = useState<string>("");
