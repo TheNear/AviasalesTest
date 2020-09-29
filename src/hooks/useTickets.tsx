@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { BASE_URL, GET_CONFIG } from "../api/config";
 import { ITicketItem } from "../components/Ticket/Ticket";
@@ -48,7 +48,7 @@ const useTickets = (): IUseTickets => {
     //     }
     //   }
     // };
-    getTicketsPart();
+    // getTicketsPart();
   }, []);
 
   const getSearchToken = useCallback(async () => {
