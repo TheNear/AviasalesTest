@@ -25,8 +25,7 @@ export interface ITicketsState {
   readonly tickets: ITicketItem[];
   readonly requestId?: string;
   readonly isFetchingTickets: boolean;
-  readonly isFetchingSearchId: boolean;
-  readonly errors: [];
+  readonly error: string;
 }
 
 export enum TicketsActionTypes {
@@ -36,7 +35,6 @@ export enum TicketsActionTypes {
   FETCH_ID_REQUEST = "FETCH_ID_REQUEST",
   FETCH_ID_FAILED = "FETCH_ID_REQUEST",
   FETCH_ID_SUCCESS = "FETCH_ID_SUCCESS",
-  SET_ERROR = "SET_ERROR",
 }
 
 export interface ITicketsActions {
@@ -49,7 +47,15 @@ export interface FetchTicketsSuccessAction extends ITicketsActions {
 }
 
 export interface FetchTicketsRequestAction extends ITicketsActions {
-  type: TicketsActionTypes.FETCH_ID_REQUEST;
+  type: TicketsActionTypes.FETCH_TICKETS_REQUEST;
 }
 
-export type TicketActions = FetchTicketsSuccessAction | FetchTicketsRequestAction;
+export interface FetchTicketsFailedAction extends ITicketsActions {
+  type: TicketsActionTypes.FETCH_TICKETS_FAILED;
+  payload: string;
+}
+
+export type TicketActions =
+  | FetchTicketsSuccessAction
+  | FetchTicketsRequestAction
+  | FetchTicketsFailedAction;

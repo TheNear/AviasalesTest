@@ -6,10 +6,15 @@ export const fetchTicketsSuccess = (tickets: ITicketItem[]): TicketActions => ({
   payload: tickets,
 });
 
-export const fetchTicketsRequest = () => {
-  
-  
-  return (dispatch: Dispatch<TicketActions> ) => {
-    
-  };
-}
+export const fetchTicketsRequest = (): TicketActions => ({
+  type: TicketsActionTypes.FETCH_TICKETS_REQUEST,
+});
+
+export const fetchTicketsFailed = (error: string): TicketActions => ({
+  type: TicketsActionTypes.FETCH_TICKETS_FAILED,
+  payload: error,
+});
+
+// return (dispatch: Dispatch<TicketActions> ) => {
+
+// };

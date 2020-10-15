@@ -1,17 +1,22 @@
-import { act } from "react-dom/test-utils";
 import { Reducer } from "redux";
 import { ITicketsState, TicketActions, TicketsActionTypes } from "./types";
 
 const initialState: ITicketsState = {
   tickets: [],
-  isFetchingSearchId: false,
   isFetchingTickets: false,
-  errors: [],
+  error: "",
 };
 
 const ticketsReducer: Reducer<ITicketsState> = (state = initialState, action: TicketActions) => {
   switch (action.type) {
-    case TicketsActionTypes.FETCH_ID_REQUEST:
+    case TicketsActionTypes.FETCH_TICKETS_REQUEST:
+      return {
+        ...state,
+        isFetchingTickets: true,
+      };
+    case TicketsActionTypes.FETCH_TICKETS_SUCCESS:
+      return state;
+    case TicketsActionTypes.FETCH_TICKETS_FAILED:
       return state;
     default:
       return state;

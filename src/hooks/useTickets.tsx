@@ -28,6 +28,7 @@ const useTickets = (): IUseTickets => {
   }, []);
 
   const getTicketsList = useCallback((token: string) => {
+    token.toLocaleLowerCase();
     // let connectError = "";
     // const getTicketsPart = async () => {
     //   try {
