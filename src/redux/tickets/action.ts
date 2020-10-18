@@ -1,5 +1,6 @@
 import { Dispatch } from "react";
-import { TicketsActionTypes, ITicketItem, TicketActions } from "./types";
+import { ITicketItem } from "../../types/tickets";
+import { TicketsActionTypes, TicketActions } from "./types";
 
 export const fetchTicketsSuccess = (tickets: ITicketItem[]): TicketActions => ({
   type: TicketsActionTypes.FETCH_TICKETS_SUCCESS,
