@@ -1,29 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./SearchPage.module.css";
 import Filter from "../../components/Filter/Filter";
 import SortControls from "../../components/SortControls/SortControls";
 import TicketsList from "../../components/TicketsList/TicketsList";
-import { useTickets } from "../../hooks/useTickets";
-import { ITicketItem } from "../../components/Ticket/Ticket";
+import { getTickets } from "../../redux/tickets/action";
+import { RootState } from "../../types/redux";
 
 const SearchPage: React.FC = () => {
-  const { tickets, isLoading, errors, refreshTicketsList } = useTickets();
-  const [sortedTickets, setSortedTickets] = useState<Array<ITicketItem>>([]);
+  const dispatch = useDispatch();
+  const tickets = useSelector((state: RootState) => state.tickets.list);
+  const isFetching = useSelector((state: RootState) => state.tickets.isFetchingTickets);
+  const error = useSelector((state: RootState) => state.tickets.error);
+
+  const getTicketsList = useCallback(() => {
+    dispatch(getTickets());
+  }, [dispatch]);
 
   useEffect(() => {
-    if (isLoading) return;
-    setSortedTickets(tickets.slice(0, 5));
-  }, [tickets, isLoading]);
+    getTicketsList();
+  }, [getTicketsList]);
 
   return (
     <main className={style.container}>
       <Filter />
       <SortControls />
       <TicketsList
-        isLoading={isLoading}
-        hasError={errors}
-        refreshTicketsList={refreshTicketsList}
-        tickets={sortedTickets}
+        isLoading={isFetching}
+        hasError={error}
+        refreshTicketsList={getTicketsList}
+        tickets={tickets.slice(0, 5)}
       />
     </main>
   );

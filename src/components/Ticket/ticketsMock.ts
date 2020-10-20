@@ -1,4 +1,4 @@
-import { ITicketItem } from "./Ticket";
+import { ITicketItem } from "../../types/tickets";
 
 const ticketMock: ITicketItem = {
   price: 18204,

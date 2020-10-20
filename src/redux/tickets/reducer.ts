@@ -1,23 +1,37 @@
 import { Reducer } from "redux";
-import { ITicketsState, TicketActions, TicketsActionTypes } from "./types";
+import { ITicketsState, TicketActions, TicketsActionTypes, TicketsSortTypes } from "./types";
 
 const initialState: ITicketsState = {
-  tickets: [],
+  list: [],
+  sortType: TicketsSortTypes.BY_PRICE,
   isFetchingTickets: false,
   error: "",
 };
 
-const ticketsReducer: Reducer<ITicketsState> = (state = initialState, action: TicketActions) => {
+const ticketsReducer: Reducer<ITicketsState, TicketActions> = (state = initialState, action) => {
   switch (action.type) {
-    case TicketsActionTypes.FETCH_TICKETS_REQUEST:
+    case TicketsActionTypes.START_FETCH_TICKETS:
       return {
         ...state,
+        list: [],
         isFetchingTickets: true,
       };
+    case TicketsActionTypes.STOP_FETCH_TICKETS:
+      return {
+        ...state,
+        isFetchingTickets: false,
+      };
     case TicketsActionTypes.FETCH_TICKETS_SUCCESS:
-      return state;
+      return {
+        ...state,
+        list: state.list.concat(action.payload),
+      };
     case TicketsActionTypes.FETCH_TICKETS_FAILED:
-      return state;
+      return {
+        ...state,
+        isFetchingTickets: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

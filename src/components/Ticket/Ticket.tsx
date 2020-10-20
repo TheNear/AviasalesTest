@@ -3,41 +3,7 @@ import TicketInfo from "../../componentsHelper/TicketInfo/TicketInfo";
 import commonStyle from "../../assets/css/common.module.css";
 import style from "./Ticket.module.css";
 import { stopsFormat, convertPrice, getTravelTime, getLandingTime } from "./TicketsFormat";
-
-export interface ITicketItem {
-  // Цена в рублях
-  price: number;
-  // Код авиакомпании (iata)
-  carrier: string;
-  // Массив перелётов.
-  // В тестовом задании это всегда поиск "туда-обратно" значит состоит из двух элементов
-  segments: [
-    {
-      // Код города (iata)
-      origin: string;
-      // Код города (iata)
-      destination: string;
-      // Дата и время вылета туда
-      date: string;
-      // Массив кодов (iata) городов с пересадками
-      stops: string[];
-      // Общее время перелёта в минутах
-      duration: number;
-    },
-    {
-      // Код города (iata)
-      origin: string;
-      // Код города (iata)
-      destination: string;
-      // Дата и время вылета обратно
-      date: string;
-      // Массив кодов (iata) городов с пересадками
-      stops: string[];
-      // Общее время перелёта в минутах
-      duration: number;
-    }
-  ];
-}
+import { ITicketItem } from "../../types/tickets";
 
 interface ITicket {
   ticket: ITicketItem;
@@ -59,8 +25,6 @@ const Ticket: React.FC<ITicket> = ({ ticket }) => {
     stops: stops2,
     duration: duration2,
   } = segments[1];
-
-  console.log(ticket);
 
   return (
     <li className={`${style.ticket} ${commonStyle.box}`}>

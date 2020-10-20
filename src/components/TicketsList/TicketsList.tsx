@@ -2,10 +2,11 @@ import React from "react";
 import style from "./TecketsList.module.css";
 import { Loader } from "../../componentsHelper/Loader/Loader";
 import { Error } from "../../componentsHelper/Error/Error";
-import { ITicketItem, Ticket } from "../Ticket/Ticket";
+import { Ticket } from "../Ticket/Ticket";
+import { ITicketItem } from "../../types/tickets";
 
 interface ITicketsList {
-  tickets: Array<ITicketItem>;
+  tickets: ITicketItem[];
   isLoading: boolean;
   hasError: string;
   refreshTicketsList: () => void;

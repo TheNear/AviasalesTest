@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import { ticketsReducer } from "./tickets/reducer";
 
-export default combineReducers({
+const rootReduces = combineReducers({
   tickets: ticketsReducer,
 });
+
+export default rootReduces;
