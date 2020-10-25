@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import style from "./TecketsList.module.css";
 import { Loader } from "../../componentsHelper/Loader/Loader";
 import { Error } from "../../componentsHelper/Error/Error";
 import { Ticket } from "../Ticket/Ticket";
 import { ITicketItem } from "../../types/tickets";
-import { RootState } from "../../types/redux";
 import { getTickets } from "../../redux/tickets/action";
+import { useTickets } from "../../hooks/useTickets";
 
 const TicketsList: React.FC = () => {
   const dispatch = useDispatch();
-  const tickets = useSelector((state: RootState) => state.tickets.list);
-  const isFetching = useSelector((state: RootState) => state.tickets.isFetchingTickets);
-  const error = useSelector((state: RootState) => state.tickets.error);
+  const { tickets, error, isFetching } = useTickets();
 
   const getTicketsList = useCallback(() => {
     dispatch(getTickets());

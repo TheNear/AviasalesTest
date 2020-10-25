@@ -1,0 +1,3 @@
+const DEFAULT_COUNT_TICKETS = 5;
+
+export { DEFAULT_COUNT_TICKETS };

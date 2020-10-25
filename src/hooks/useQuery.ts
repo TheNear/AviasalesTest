@@ -3,13 +3,16 @@ import queryString, { ParsedQuery, ParseOptions } from "query-string";
 
 const queryOptions: ParseOptions = { arrayFormat: "comma" };
 
-// type QueryActionType<T> = (key: string, value: string) => T;
-type IsHasParamType = (key: string | string[] | undefined | null, value: string) => boolean;
-type ParamToggleType = (key: string, value: string, toggle: boolean) => void;
+type HasKeyValueType = (key: string | string[] | undefined | null, value: string) => boolean;
+type QueryToggleType = (key: string, value: string, toggle?: boolean) => void;
+type GetKeyValeuType = (key: string) => string | string[];
+type QueryPushType = (key: string, value: string | string[]) => void;
 
 interface IUseQueryReturn {
-  isHasParam: IsHasParamType;
-  paramToggle: ParamToggleType;
+  hasKeyValue: HasKeyValueType;
+  queryToggle: QueryToggleType;
+  getKeyValues: GetKeyValeuType;
+  queryPush: QueryPushType;
 }
 
 const useQuery = (): IUseQueryReturn => {
@@ -17,7 +20,9 @@ const useQuery = (): IUseQueryReturn => {
   const location = useLocation();
   const queries: ParsedQuery = queryString.parse(location.search, queryOptions);
 
-  const isHasParam: IsHasParamType = (key, value) => {
+  console.log("ERROR HERE!");
+
+  const hasKeyValue: HasKeyValueType = (key, value) => {
     if (!key) return false;
     if (typeof key === "string") {
       return key === value;
@@ -25,7 +30,7 @@ const useQuery = (): IUseQueryReturn => {
     return key.includes(value);
   };
 
-  const queryPush = (key: string, value: string | string[]) => {
+  const queryPush: QueryPushType = (key, value) => {
     history.push({
       search: queryString.stringify(
         {
@@ -37,6 +42,10 @@ const useQuery = (): IUseQueryReturn => {
     });
   };
 
+  const getKeyValues = (key: string): string | string[] => {
+    return queries[key] || [];
+  };
+
   const queryRemove = (key: string) => {
     delete queries[key];
     history.push({
@@ -44,9 +53,10 @@ const useQuery = (): IUseQueryReturn => {
     });
   };
 
-  const paramToggle = (key: string, value: string, toggle = false) => {
+  const queryToggle: QueryToggleType = (key, value, toggle = false) => {
     const keyParam = queries[key];
-    if (!isHasParam(keyParam, value)) {
+    const query = hasKeyValue(keyParam, value);
+    if (!query) {
       if (Array.isArray(keyParam)) {
         queryPush(key, [...keyParam, value]);
       } else {
@@ -65,8 +75,10 @@ const useQuery = (): IUseQueryReturn => {
   };
 
   return {
-    isHasParam,
-    paramToggle,
+    queryPush,
+    queryToggle,
+    hasKeyValue,
+    getKeyValues,
   };
 };
 
