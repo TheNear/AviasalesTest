@@ -7,7 +7,7 @@ import App from "./App";
 // const history = createBrowserHistory();
 
 ReactDOM.render(
-  <Router>
+  <Router basename="/AviasalesTest">
     <React.StrictMode>
       <App />
     </React.StrictMode>
