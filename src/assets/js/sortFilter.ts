@@ -2,7 +2,7 @@ import { ITicketItem } from "../../types/tickets";
 import { DEFAULT_COUNT_TICKETS } from "./constants";
 
 type SortFilterFuncType = (tickets: ITicketItem[]) => ITicketItem[];
-type FuncArrayTypes = [SortFilterFuncType?, SortFilterFuncType?];
+type FuncArrayTypes = SortFilterFuncType[];
 
 type SortFilterType = (
   tickets: ITicketItem[],
@@ -10,14 +10,14 @@ type SortFilterType = (
   length?: number
 ) => ITicketItem[];
 
-type FilterByStopsType = (stopsCount: number[]) => SortFilterFuncType;
+type FilterByStopsType = (stopsCount: string[]) => SortFilterFuncType;
 
 export const filterByStops: FilterByStopsType = (stopsCount) => {
   return (tickets) => {
     return tickets.filter((item) => {
-      if (stopsCount.includes(0)) return item;
+      if (!stopsCount.length) return item;
       const stops = item.segments[0].stops.length + item.segments[1].stops.length;
-      return stopsCount.includes(stops);
+      return stopsCount.includes(`${stops}`);
     });
   };
 };
@@ -45,7 +45,6 @@ export const sortByTime: SortFilterFuncType = (tickets) => {
 
 export const sortFilter: SortFilterType = (tickets, queue, length = DEFAULT_COUNT_TICKETS) => {
   let copy = tickets.slice();
-
   if (queue.length) {
     queue.forEach((func) => {
       if (func) {
@@ -53,8 +52,6 @@ export const sortFilter: SortFilterType = (tickets, queue, length = DEFAULT_COUN
       }
     });
   }
-
-  copy.splice(0, length);
-
+  copy = copy.slice(0, length);
   return copy;
 };

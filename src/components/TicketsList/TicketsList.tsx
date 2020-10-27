@@ -1,12 +1,16 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import style from "./TecketsList.module.css";
+import style from "./TicketsList.module.css";
 import { Loader } from "../../componentsHelper/Loader/Loader";
 import { Error } from "../../componentsHelper/Error/Error";
 import { Ticket } from "../Ticket/Ticket";
 import { ITicketItem } from "../../types/tickets";
 import { getTickets } from "../../redux/tickets/action";
 import { useTickets } from "../../hooks/useTickets";
+
+// interface ITicketsList {
+//   getQueries: GetKeysValuesType;
+// }
 
 const TicketsList: React.FC = () => {
   const dispatch = useDispatch();

@@ -13,7 +13,7 @@ type ErrorMapType = {
 };
 
 const errorMap: ErrorMapType = {
-  "timeout of 1000ms exceeded": "Истекло время ожидания! (timeout)",
+  "timeout of 1500ms exceeded": "Истекло время ожидания! (timeout)",
   "Request failed with status code 404": "Сервер не отвечает! (404)",
   "Request failed with status code 500": "Ошибка ответа сервера! (505)",
 };

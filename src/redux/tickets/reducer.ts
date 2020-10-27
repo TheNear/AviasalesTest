@@ -14,6 +14,7 @@ const ticketsReducer: Reducer<ITicketsState, TicketActions> = (state = initialSt
       return {
         ...state,
         list: [],
+        error: "",
         isFetchingTickets: true,
       };
     case TicketsActionTypes.STOP_FETCH_TICKETS:
