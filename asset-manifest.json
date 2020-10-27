@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.9ffe23c4.chunk.css",
-    "main.js": "/static/js/main.e361c4eb.chunk.js",
-    "main.js.map": "/static/js/main.e361c4eb.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.f392bf54.js",
-    "runtime-main.js.map": "/static/js/runtime-main.f392bf54.js.map",
-    "static/js/2.ba0600f9.chunk.js": "/static/js/2.ba0600f9.chunk.js",
-    "static/js/2.ba0600f9.chunk.js.map": "/static/js/2.ba0600f9.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.b6ce56777dfff1531bae9db9e0a61514.js": "/precache-manifest.b6ce56777dfff1531bae9db9e0a61514.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.9ffe23c4.chunk.css.map": "/static/css/main.9ffe23c4.chunk.css.map",
-    "static/js/2.ba0600f9.chunk.js.LICENSE.txt": "/static/js/2.ba0600f9.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/static/media/logo.c4580fba.svg",
-    "static/media/spinner.svg": "/static/media/spinner.f7f06c52.svg"
+    "main.css": "/AviasalesTest/static/css/main.9ffe23c4.chunk.css",
+    "main.js": "/AviasalesTest/static/js/main.e361c4eb.chunk.js",
+    "main.js.map": "/AviasalesTest/static/js/main.e361c4eb.chunk.js.map",
+    "runtime-main.js": "/AviasalesTest/static/js/runtime-main.4b9c0610.js",
+    "runtime-main.js.map": "/AviasalesTest/static/js/runtime-main.4b9c0610.js.map",
+    "static/js/2.ba0600f9.chunk.js": "/AviasalesTest/static/js/2.ba0600f9.chunk.js",
+    "static/js/2.ba0600f9.chunk.js.map": "/AviasalesTest/static/js/2.ba0600f9.chunk.js.map",
+    "index.html": "/AviasalesTest/index.html",
+    "precache-manifest.f1cd08591eb6ea90c10d2695fa61acd0.js": "/AviasalesTest/precache-manifest.f1cd08591eb6ea90c10d2695fa61acd0.js",
+    "service-worker.js": "/AviasalesTest/service-worker.js",
+    "static/css/main.9ffe23c4.chunk.css.map": "/AviasalesTest/static/css/main.9ffe23c4.chunk.css.map",
+    "static/js/2.ba0600f9.chunk.js.LICENSE.txt": "/AviasalesTest/static/js/2.ba0600f9.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/AviasalesTest/static/media/logo.c4580fba.svg",
+    "static/media/spinner.svg": "/AviasalesTest/static/media/spinner.f7f06c52.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.f392bf54.js",
+    "static/js/runtime-main.4b9c0610.js",
     "static/js/2.ba0600f9.chunk.js",
     "static/css/main.9ffe23c4.chunk.css",
     "static/js/main.e361c4eb.chunk.js"
