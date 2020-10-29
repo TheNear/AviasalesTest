@@ -5,48 +5,44 @@ import { useCallback, useEffect, useState } from "react";
 const queryOptions: ParseOptions = { arrayFormat: "comma" };
 
 export type HasKeyValueType = (key: string | string[] | undefined | null, value: string) => boolean;
-export type QueryToggleType = (key: string, value: string, toggle?: boolean) => void;
-export type GetKeyValueType = (key: string) => string[];
-export type QueryPushType = (key: string, value: string | string[]) => void;
-export type GetKeysValuesType = (keys: string[]) => GetKeysValuesReturnType;
-export type QueryRemoveType = (key: string) => void;
+export type QueryToggleType<A = string> = (key: A, value: string, toggle?: boolean) => void;
+export type GetKeyValueType<A = string> = (key: A) => string[];
+export type QueryPushType<A = string> = (key: A, value: string | string[]) => void;
+export type GetKeysValuesType<A = string> = (keys: A[]) => GetKeysValuesReturnType;
+export type QueryRemoveType<A = string> = (key: A) => void;
 
 export interface GetKeysValuesReturnType {
   [key: string]: string[];
 }
 
-interface IUseQueryReturn {
+interface IUseQueryReturn<T> {
   hasKeyValue: HasKeyValueType;
-  queryToggle: QueryToggleType;
-  getKeyValues: GetKeyValueType;
-  changeKeyValue: QueryPushType;
-  getKeysValues: GetKeysValuesType;
-  queryRemove: QueryRemoveType;
+  queryToggle: QueryToggleType<T>;
+  getKeyValues: GetKeyValueType<T>;
+  changeKeyValue: QueryPushType<T>;
+  getKeysValues: GetKeysValuesType<T>;
+  queryRemove: QueryRemoveType<T>;
   defValue: string[];
 }
 
-export type UseQueryType = (defKey?: string) => IUseQueryReturn;
+// export type UseQueryType = <T extends string>(defKey?: T) => IUseQueryReturn;
 
 /**
  * Custom hook which allows work with URL query more comfortable
- * @param defKey default key wich value you want to get every update
+ * @param defKey default key wich value you want to get every update!
  */
 
-const useQuery: UseQueryType = (defKey) => {
+const useQuery = <T extends string, A extends T = T>(defKey?: A): IUseQueryReturn<T> => {
   const history = useHistory();
   const location = useLocation();
   const [queries, setQueries] = useState<ParsedQuery>({});
   const [defValue, setDefValue] = useState<string[]>([]);
 
-  const hasKeyValue: HasKeyValueType = useCallback((key, value) => {
-    if (!key) return false;
-    if (typeof key === "string") {
-      return key === value;
-    }
-    return key.includes(value);
-  }, []);
+  const historyPush = useCallback((string: string) => {
+    history.push({ search: string });
+  }, [history]);
 
-  const changeKeyValue: QueryPushType = useCallback(
+  const changeKeyValue: QueryPushType<T> = useCallback(
     (key, value) => {
       history.push({
         search: queryString.stringify(
@@ -61,7 +57,15 @@ const useQuery: UseQueryType = (defKey) => {
     [history, queries]
   );
 
-  const getKeyValues: GetKeyValueType = useCallback(
+  const hasKeyValue: HasKeyValueType = useCallback((key, value) => {
+    if (!key) return false;
+    if (typeof key === "string") {
+      return key === value;
+    }
+    return key.includes(value);
+  }, []);
+
+  const getKeyValues: GetKeyValueType<T> = useCallback(
     (key) => {
       const keyValue = queries[key];
       if (keyValue) {
@@ -72,7 +76,7 @@ const useQuery: UseQueryType = (defKey) => {
     [queries]
   );
 
-  const getKeysValues: GetKeysValuesType = useCallback(
+  const getKeysValues: GetKeysValuesType<T> = useCallback(
     (keys) => {
       const keyValueObj: GetKeysValuesReturnType = {};
       keys.forEach((key) => {
@@ -86,7 +90,7 @@ const useQuery: UseQueryType = (defKey) => {
     [queries]
   );
 
-  const queryRemove: QueryRemoveType = useCallback(
+  const queryRemove: QueryRemoveType<T> = useCallback(
     (key) => {
       const queryCopy = { ...queries };
       delete queryCopy[key];
@@ -97,7 +101,7 @@ const useQuery: UseQueryType = (defKey) => {
     [queries, history]
   );
 
-  const queryToggle: QueryToggleType = useCallback(
+  const queryToggle: QueryToggleType<T> = useCallback(
     (key, value, toggle = true) => {
       const keyParam = queries[key];
       const query = hasKeyValue(keyParam, value);

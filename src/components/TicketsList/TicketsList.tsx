@@ -20,15 +20,13 @@ const TicketsList: React.FC = () => {
     dispatch(getTickets());
   }, [dispatch]);
 
-  useEffect(() => {
-    getTicketsList();
-  }, [getTicketsList]);
+  useEffect(getTicketsList, [getTicketsList]);
 
   return (
     <ul className={style.tickets}>
       {isFetching && <Loader />}
       {!isFetching && error && <Error refreshTicketsList={getTicketsList} />}
-      {tickets.slice(0, 5).map((ticket: ITicketItem) => (
+      {tickets.map((ticket: ITicketItem) => (
         <Ticket
           key={`${ticket.price}${ticket.segments[0].date}${ticket.carrier}`}
           ticket={ticket}

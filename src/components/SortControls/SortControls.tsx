@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import style from "./SortControls.module.css";
 import Button from "../../componentsHelper/Button/Button";
 import { useQuery } from "../../hooks/useQuery";
+import { QueryKeys } from "../../types/sortfilter";
 
 interface IButtonStatus {
   [key: string]: string | undefined;
@@ -13,7 +14,7 @@ const buttonStatus: IButtonStatus = {
 };
 
 const SortControls: React.FC = () => {
-  const { changeKeyValue, defValue } = useQuery("sort");
+  const { changeKeyValue, defValue } = useQuery<QueryKeys>("sort");
 
   const sortByDuration = () => {
     changeKeyValue("sort", "by_time");
