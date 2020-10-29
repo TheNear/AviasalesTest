@@ -29,7 +29,7 @@ const Ticket: React.FC<ITicket> = ({ ticket }) => {
   return (
     <li className={`${style.ticket} ${commonStyle.box}`}>
       <div className={style.price}>{convertPrice(price)} P</div>
-      <img className={style.image} src={`http://pics.avs.io/99/36/${carrier}.png`} alt="airport" />
+      <img className={style.image} src={`https://pics.avs.io/99/36/${carrier}.png`} alt="airport" />
       <TicketInfo title={`${from1} - ${to1}`} text={getLandingTime(date1, duration1)} />
       <TicketInfo title="В пути" text={getTravelTime(duration1)} />
       <TicketInfo title={stopsFormat[stops1.length]} text={stops1.join()} />
