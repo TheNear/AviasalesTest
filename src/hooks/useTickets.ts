@@ -5,7 +5,15 @@ import { RootState } from "../types/redux";
 import { ITicketItem } from "../types/tickets";
 import { GetKeysValuesReturnType, useQuery } from "./useQuery";
 
-const useTickets = () => {
+interface UseTicketsReturn {
+  tickets: ITicketItem[];
+  isFetching: boolean;
+  error: string;
+}
+
+type UseTicketsType = () => UseTicketsReturn;
+
+const useTickets: UseTicketsType = () => {
   const { getKeysValues } = useQuery();
   const tickets = useSelector((state: RootState) => state.tickets.list);
   const isFetching = useSelector((state: RootState) => state.tickets.isFetchingTickets);
