@@ -4,9 +4,9 @@ import { useCallback, useEffect, useState } from "react";
 
 const queryOptions: ParseOptions = { arrayFormat: "comma" };
 
-export type HasKeyValueType = (key: string | string[] | undefined | null, value: string) => boolean;
+export type HasValue = (key: string | string[] | undefined | null, value: string) => boolean;
 export type QueryToggleType<A = string> = (key: A, value: string, toggle?: boolean) => void;
-export type GetKeyValueType<A = string> = (key: A) => string[];
+export type GetValue<A = string> = (key: A) => string[];
 export type QueryPushType<A = string> = (key: A, value: string | string[]) => void;
 export type GetKeysValuesType<A = string> = (keys: A[]) => GetKeysValuesReturnType;
 export type QueryRemoveType<A = string> = (key: A) => void;
@@ -16,21 +16,14 @@ export interface GetKeysValuesReturnType {
 }
 
 interface IUseQueryReturn<T> {
-  hasKeyValue: HasKeyValueType;
+  hasValue: HasValue;
   queryToggle: QueryToggleType<T>;
-  getKeyValues: GetKeyValueType<T>;
+  getValue: GetValue<T>;
   changeKeyValue: QueryPushType<T>;
   getKeysValues: GetKeysValuesType<T>;
   queryRemove: QueryRemoveType<T>;
   defValue: string[];
 }
-
-// export type UseQueryType = <T extends string>(defKey?: T) => IUseQueryReturn;
-
-/**
- * Custom hook which allows work with URL query more comfortable
- * @param defKey default key wich value you want to get every update!
- */
 
 const useQuery = <T extends string, A extends T = T>(defKey?: A): IUseQueryReturn<T> => {
   const history = useHistory();
@@ -38,9 +31,12 @@ const useQuery = <T extends string, A extends T = T>(defKey?: A): IUseQueryRetur
   const [queries, setQueries] = useState<ParsedQuery>({});
   const [defValue, setDefValue] = useState<string[]>([]);
 
-  const historyPush = useCallback((string: string) => {
-    history.push({ search: string });
-  }, [history]);
+  // const historyPush = useCallback(
+  //   (string: string) => {
+  //     history.push({ search: string });
+  //   },
+  //   [history]
+  // );
 
   const changeKeyValue: QueryPushType<T> = useCallback(
     (key, value) => {
@@ -57,19 +53,16 @@ const useQuery = <T extends string, A extends T = T>(defKey?: A): IUseQueryRetur
     [history, queries]
   );
 
-  const hasKeyValue: HasKeyValueType = useCallback((key, value) => {
+  const hasValue: HasValue = useCallback((key, value) => {
     if (!key) return false;
-    if (typeof key === "string") {
-      return key === value;
-    }
-    return key.includes(value);
+    return Array.isArray(key) ? key.includes(value) : key === value;
   }, []);
 
-  const getKeyValues: GetKeyValueType<T> = useCallback(
+  const getValue: GetValue<T> = useCallback(
     (key) => {
-      const keyValue = queries[key];
-      if (keyValue) {
-        return Array.isArray(keyValue) ? keyValue : [keyValue];
+      const value = queries[key];
+      if (value) {
+        return Array.isArray(value) ? value : [value];
       }
       return [];
     },
@@ -104,7 +97,7 @@ const useQuery = <T extends string, A extends T = T>(defKey?: A): IUseQueryRetur
   const queryToggle: QueryToggleType<T> = useCallback(
     (key, value, toggle = true) => {
       const keyParam = queries[key];
-      const query = hasKeyValue(keyParam, value);
+      const query = hasValue(keyParam, value);
       if (!query) {
         if (Array.isArray(keyParam)) {
           changeKeyValue(key, [...keyParam, value]);
@@ -124,7 +117,7 @@ const useQuery = <T extends string, A extends T = T>(defKey?: A): IUseQueryRetur
         }
       }
     },
-    [queries, hasKeyValue, changeKeyValue, queryRemove]
+    [queries, hasValue, changeKeyValue, queryRemove]
   );
 
   useEffect(() => {
@@ -133,15 +126,15 @@ const useQuery = <T extends string, A extends T = T>(defKey?: A): IUseQueryRetur
 
   useEffect(() => {
     if (defKey) {
-      setDefValue(getKeyValues(defKey));
+      setDefValue(getValue(defKey));
     }
-  }, [getKeyValues, defKey]);
+  }, [getValue, defKey]);
 
   return {
     changeKeyValue,
     queryToggle,
-    hasKeyValue,
-    getKeyValues,
+    hasValue,
+    getValue,
     getKeysValues,
     queryRemove,
     defValue,
