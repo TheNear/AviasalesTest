@@ -1,56 +1,43 @@
 import { useHistory, useLocation } from "react-router-dom";
 import queryString, { ParsedQuery, ParseOptions } from "query-string";
 import { useCallback, useEffect, useState } from "react";
+import { checkValue } from "../assets/js/helpers";
 
-const queryOptions: ParseOptions = { arrayFormat: "comma" };
+const parseOption: ParseOptions = { arrayFormat: "comma" };
 
 export type HasValue = (key: string | string[] | undefined | null, value: string) => boolean;
-export type QueryToggleType<A = string> = (key: A, value: string, toggle?: boolean) => void;
+export type ToggleValue<A = string> = (key: A, value: string, toggle?: boolean) => void;
 export type GetValue<A = string> = (key: A) => string[];
-export type QueryPushType<A = string> = (key: A, value: string | string[]) => void;
-export type GetKeysValuesType<A = string> = (keys: A[]) => GetKeysValuesReturnType;
-export type QueryRemoveType<A = string> = (key: A) => void;
+export type SetValue<A = string> = (key: A, value: string | string[]) => void;
+export type GetValues<A = string> = (keys: A[]) => ParsedQueryR;
+export type DeleteValue<A = string> = (key: A) => void;
+export type PushQuery = (query: ParsedQuery) => void;
 
-export interface GetKeysValuesReturnType {
+export interface ParsedQueryR {
   [key: string]: string[];
 }
 
-interface IUseQueryReturn<T> {
+interface UseQueryR<T> {
   hasValue: HasValue;
-  queryToggle: QueryToggleType<T>;
+  toggleValue: ToggleValue<T>;
   getValue: GetValue<T>;
-  changeKeyValue: QueryPushType<T>;
-  getKeysValues: GetKeysValuesType<T>;
-  queryRemove: QueryRemoveType<T>;
-  defValue: string[];
+  setValue: SetValue<T>;
+  getValues: GetValues<T>;
+  deleteValue: DeleteValue<T>;
+  defaultValue: string[];
 }
 
-const useQuery = <T extends string, A extends T = T>(defKey?: A): IUseQueryReturn<T> => {
+const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<T> => {
   const history = useHistory();
   const location = useLocation();
   const [queries, setQueries] = useState<ParsedQuery>({});
-  const [defValue, setDefValue] = useState<string[]>([]);
+  const [defaultValue, setDefaultValue] = useState<string[]>([]);
 
-  // const historyPush = useCallback(
-  //   (string: string) => {
-  //     history.push({ search: string });
-  //   },
-  //   [history]
-  // );
-
-  const changeKeyValue: QueryPushType<T> = useCallback(
-    (key, value) => {
-      history.push({
-        search: queryString.stringify(
-          {
-            ...queries,
-            [key]: value,
-          },
-          queryOptions
-        ),
-      });
+  const pushQuery: PushQuery = useCallback(
+    (query) => {
+      history.push({ search: queryString.stringify(query, parseOption) });
     },
-    [history, queries]
+    [history]
   );
 
   const hasValue: HasValue = useCallback((key, value) => {
@@ -60,84 +47,81 @@ const useQuery = <T extends string, A extends T = T>(defKey?: A): IUseQueryRetur
 
   const getValue: GetValue<T> = useCallback(
     (key) => {
-      const value = queries[key];
-      if (value) {
-        return Array.isArray(value) ? value : [value];
-      }
-      return [];
+      return checkValue(queries[key]) || [];
     },
     [queries]
   );
 
-  const getKeysValues: GetKeysValuesType<T> = useCallback(
+  const getValues: GetValues<T> = useCallback(
     (keys) => {
-      const keyValueObj: GetKeysValuesReturnType = {};
-      keys.forEach((key) => {
-        const keyValue = queries[key];
-        if (keyValue) {
-          keyValueObj[key] = Array.isArray(keyValue) ? keyValue : [keyValue];
-        }
-      });
-      return keyValueObj;
+      return keys.reduce((acc, cur) => {
+        const value = checkValue(queries[cur]);
+        return value ? { ...acc, [cur]: value } : acc;
+      }, {});
     },
     [queries]
   );
 
-  const queryRemove: QueryRemoveType<T> = useCallback(
+  const setValue: SetValue<T> = useCallback(
+    (key, value) => {
+      pushQuery({ ...queries, [key]: value });
+    },
+    [queries, pushQuery]
+  );
+
+  const deleteValue: DeleteValue<T> = useCallback(
     (key) => {
       const queryCopy = { ...queries };
       delete queryCopy[key];
-      history.push({
-        search: queryString.stringify(queryCopy, queryOptions),
-      });
+      pushQuery(queryCopy);
     },
-    [queries, history]
+    [queries, pushQuery]
   );
 
-  const queryToggle: QueryToggleType<T> = useCallback(
+  const toggleValue: ToggleValue<T> = useCallback(
     (key, value, toggle = true) => {
       const keyParam = queries[key];
       const query = hasValue(keyParam, value);
       if (!query) {
         if (Array.isArray(keyParam)) {
-          changeKeyValue(key, [...keyParam, value]);
+          setValue(key, [...keyParam, value]);
         } else if (keyParam) {
-          changeKeyValue(key, [keyParam, value]);
+          setValue(key, [keyParam, value]);
         } else {
-          changeKeyValue(key, value);
+          setValue(key, value);
         }
       } else if (toggle) {
         if (Array.isArray(keyParam)) {
-          changeKeyValue(
+          setValue(
             key,
             keyParam.filter((item) => item !== value)
           );
         } else {
-          queryRemove(key);
+          deleteValue(key);
         }
       }
     },
-    [queries, hasValue, changeKeyValue, queryRemove]
+    [queries, hasValue, setValue, deleteValue]
   );
 
   useEffect(() => {
-    setQueries(queryString.parse(location.search, queryOptions));
+    setQueries(queryString.parse(location.search, parseOption));
   }, [location]);
 
   useEffect(() => {
-    if (defKey) {
-      setDefValue(getValue(defKey));
+    if (defaultKey) {
+      setDefaultValue(getValue(defaultKey));
     }
-  }, [getValue, defKey]);
+  }, [getValue, defaultKey]);
 
   return {
-    changeKeyValue,
-    queryToggle,
+    setValue,
+    toggleValue,
     hasValue,
     getValue,
-    getKeysValues,
-    queryRemove,
-    defValue,
+    getValues,
+    deleteValue,
+    defaultValue,
   };
 };
 

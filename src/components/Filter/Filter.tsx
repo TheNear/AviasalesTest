@@ -6,7 +6,7 @@ import { filterList } from "./filterList";
 import { useQuery } from "../../hooks/useQuery";
 
 const Filter: React.FC = () => {
-  const { defValue, queryToggle, queryRemove } = useQuery("filter");
+  const { defaultValue, toggleValue, deleteValue } = useQuery("filter");
 
   return (
     <div className={style.filter}>
@@ -18,12 +18,12 @@ const Filter: React.FC = () => {
               key={name}
               clickHandler={() => {
                 if (value && value !== "all") {
-                  queryToggle("filter", value);
+                  toggleValue("filter", value);
                 } else {
-                  queryRemove("filter");
+                  deleteValue("filter");
                 }
               }}
-              checked={defValue.includes(value) || (!defValue.length && value === "all")}
+              checked={defaultValue.includes(value) || (!defaultValue.length && value === "all")}
               text={text}
               name={name}
             />

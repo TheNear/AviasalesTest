@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { filterByStops, sortByPrice, sortByTime, sortFilter } from "../assets/js/sortFilter";
 import { RootState } from "../types/redux";
 import { ITicketItem } from "../types/tickets";
-import { GetKeysValuesReturnType, useQuery } from "./useQuery";
+import { ParsedQueryR, useQuery } from "./useQuery";
 
 interface UseTicketsReturn {
   tickets: ITicketItem[];
@@ -14,16 +14,16 @@ interface UseTicketsReturn {
 type UseTicketsType = () => UseTicketsReturn;
 
 const useTickets: UseTicketsType = () => {
-  const { getKeysValues } = useQuery();
+  const { getValues } = useQuery();
   const tickets = useSelector((state: RootState) => state.tickets.list);
   const isFetching = useSelector((state: RootState) => state.tickets.isFetchingTickets);
   const error = useSelector((state: RootState) => state.tickets.error);
   const [filtredTickets, setFiltredTickets] = useState<ITicketItem[]>([]);
-  const [queryKeys, setQueryKeys] = useState<GetKeysValuesReturnType>({});
+  const [queryKeys, setQueryKeys] = useState<ParsedQueryR>({});
 
   useEffect(() => {
-    setQueryKeys(getKeysValues(["filter", "sort"]));
-  }, [getKeysValues]);
+    setQueryKeys(getValues(["filter", "sort"]));
+  }, [getValues]);
 
   useEffect(() => {
     const sortFunctions = [];
