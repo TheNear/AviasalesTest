@@ -1,16 +1,18 @@
 import { useHistory, useLocation } from "react-router-dom";
 import queryString, { ParsedQuery, ParseOptions } from "query-string";
-import { useCallback, useEffect, useState } from "react";
-import { checkValue } from "../assets/js/helpers";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { makeArray } from "../assets/js/helpers";
 
 const parseOption: ParseOptions = { arrayFormat: "comma" };
 
-export type HasValue = (key: string | string[] | undefined | null, value: string) => boolean;
+export type HasValue = (
+  key: string | string[] | undefined | null | boolean,
+  value: string
+) => boolean;
 export type ToggleValue<A = string> = (key: A, value: string, toggle?: boolean) => void;
 export type GetValue<A = string> = (key: A) => string[];
 export type SetValue<A = string> = (key: A, value: string | string[]) => void;
 export type GetValues<A = string> = (keys: A[]) => ParsedQueryR;
-export type DeleteValue<A = string> = (key: A) => void;
 export type PushQuery = (query: ParsedQuery) => void;
 
 export interface ParsedQueryR {
@@ -23,7 +25,6 @@ interface UseQueryR<T> {
   getValue: GetValue<T>;
   setValue: SetValue<T>;
   getValues: GetValues<T>;
-  deleteValue: DeleteValue<T>;
   defaultValue: string[];
 }
 
@@ -31,7 +32,6 @@ const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<
   const history = useHistory();
   const location = useLocation();
   const [queries, setQueries] = useState<ParsedQuery>({});
-  const [defaultValue, setDefaultValue] = useState<string[]>([]);
 
   const pushQuery: PushQuery = useCallback(
     (query) => {
@@ -41,13 +41,12 @@ const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<
   );
 
   const hasValue: HasValue = useCallback((key, value) => {
-    if (!key) return false;
-    return Array.isArray(key) ? key.includes(value) : key === value;
+    return key && Array.isArray(key) ? key.includes(value) : key === value;
   }, []);
 
   const getValue: GetValue<T> = useCallback(
     (key) => {
-      return checkValue(queries[key]) || [];
+      return makeArray(queries[key]) || [];
     },
     [queries]
   );
@@ -55,7 +54,7 @@ const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<
   const getValues: GetValues<T> = useCallback(
     (keys) => {
       return keys.reduce((acc, cur) => {
-        const value = checkValue(queries[cur]);
+        const value = makeArray(queries[cur]);
         return value ? { ...acc, [cur]: value } : acc;
       }, {});
     },
@@ -69,50 +68,32 @@ const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<
     [queries, pushQuery]
   );
 
-  const deleteValue: DeleteValue<T> = useCallback(
-    (key) => {
-      const queryCopy = { ...queries };
-      delete queryCopy[key];
-      pushQuery(queryCopy);
-    },
-    [queries, pushQuery]
-  );
-
   const toggleValue: ToggleValue<T> = useCallback(
-    (key, value, toggle = true) => {
-      const keyParam = queries[key];
-      const query = hasValue(keyParam, value);
-      if (!query) {
-        if (Array.isArray(keyParam)) {
-          setValue(key, [...keyParam, value]);
-        } else if (keyParam) {
-          setValue(key, [keyParam, value]);
-        } else {
-          setValue(key, value);
-        }
-      } else if (toggle) {
-        if (Array.isArray(keyParam)) {
+    (key, newValue) => {
+      const oldValue = makeArray(queries[key]);
+      if (oldValue) {
+        if (hasValue(oldValue, newValue)) {
           setValue(
             key,
-            keyParam.filter((item) => item !== value)
+            oldValue.filter((item) => item !== newValue)
           );
         } else {
-          deleteValue(key);
+          setValue(key, [...oldValue, newValue]);
         }
+      } else {
+        setValue(key, newValue);
       }
     },
-    [queries, hasValue, setValue, deleteValue]
+    [queries, hasValue, setValue]
   );
+
+  const defaultValue = useMemo(() => {
+    return defaultKey ? getValue(defaultKey) : [];
+  }, [defaultKey, getValue]);
 
   useEffect(() => {
     setQueries(queryString.parse(location.search, parseOption));
   }, [location]);
-
-  useEffect(() => {
-    if (defaultKey) {
-      setDefaultValue(getValue(defaultKey));
-    }
-  }, [getValue, defaultKey]);
 
   return {
     setValue,
@@ -120,7 +101,6 @@ const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<
     hasValue,
     getValue,
     getValues,
-    deleteValue,
     defaultValue,
   };
 };
