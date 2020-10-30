@@ -1,57 +1,19 @@
 import { ITicketItem } from "../../types/tickets";
-import { DEFAULT_COUNT_TICKETS } from "./constants";
 
-type SortFilterFuncType = (tickets: ITicketItem[]) => ITicketItem[];
-type FuncArrayTypes = SortFilterFuncType[];
+type SortTicket = (a: ITicketItem, b: ITicketItem) => number;
+type FilterByStopsType = (tickets: ITicketItem[], stopsCount: string[]) => ITicketItem[];
 
-type SortFilterType = (
-  tickets: ITicketItem[],
-  queue: FuncArrayTypes,
-  length?: number
-) => ITicketItem[];
-
-type FilterByStopsType = (stopsCount: string[]) => SortFilterFuncType;
-
-export const filterByStops: FilterByStopsType = (stopsCount) => {
-  return (tickets) => {
-    return tickets.filter((item) => {
-      if (!stopsCount.length) return item;
-      const stops = item.segments[0].stops.length + item.segments[1].stops.length;
-      return stopsCount.includes(`${stops}`);
-    });
-  };
-};
-
-export const sortByPrice: SortFilterFuncType = (tickets) => {
-  return tickets.sort((a, b) => a.price - b.price);
-};
-
-export const sortByTime: SortFilterFuncType = (tickets) => {
-  return tickets.sort((a, b) => {
-    const firstDuration = a.segments[0].duration + a.segments[1].duration;
-    const secondDuration = b.segments[0].duration + b.segments[1].duration;
-    return firstDuration - secondDuration;
+export const filterByStops: FilterByStopsType = (tickets, stopsCount) => {
+  return tickets.filter((item) => {
+    if (!stopsCount.length) return item;
+    const stops = item.segments[0].stops.length + item.segments[1].stops.length;
+    return stopsCount.includes(`${stops}`);
   });
 };
 
-/**
- *
- * @param tickets Array of tickets wich we want to SORT and then FILTER
- * @param queue Array of Functions.
- * ATTENTION: first of all SORT function
- * array and then FILTER function
- * @param length Return array length
- */
-
-export const sortFilter: SortFilterType = (tickets, queue, length = DEFAULT_COUNT_TICKETS) => {
-  let copy = tickets.slice();
-  if (queue.length) {
-    queue.forEach((func) => {
-      if (func) {
-        copy = func(copy);
-      }
-    });
-  }
-  copy = copy.slice(0, length);
-  return copy;
+export const sortByPrice: SortTicket = (a, b) => a.price - b.price;
+export const sortByTime: SortTicket = (a, b) => {
+  const firstDuration = a.segments[0].duration + a.segments[1].duration;
+  const secondDuration = b.segments[0].duration + b.segments[1].duration;
+  return firstDuration - secondDuration;
 };

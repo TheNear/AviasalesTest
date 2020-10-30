@@ -5,15 +5,12 @@ import { makeArray } from "../assets/js/helpers";
 
 const parseOption: ParseOptions = { arrayFormat: "comma" };
 
-export type HasValue = (
-  key: string | string[] | undefined | null | boolean,
-  value: string
-) => boolean;
-export type ToggleValue<A = string> = (key: A, value: string, toggle?: boolean) => void;
-export type GetValue<A = string> = (key: A) => string[];
-export type SetValue<A = string> = (key: A, value: string | string[]) => void;
-export type GetValues<A = string> = (keys: A[]) => ParsedQueryR;
-export type PushQuery = (query: ParsedQuery) => void;
+type HasValue = (key: string | string[] | undefined | null | boolean, value: string) => boolean;
+type ToggleValue<A = string> = (key: A, value: string, toggle?: boolean) => void;
+type GetValue<A = string> = (key: A) => string[];
+type SetValue<A = string> = (key: A, value: string | string[]) => void;
+type GetValues<A = string> = (keys: A[]) => ParsedQueryR;
+type PushQuery = (query: ParsedQuery) => void;
 
 export interface ParsedQueryR {
   [key: string]: string[];
@@ -87,7 +84,7 @@ const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<
     [queries, hasValue, setValue]
   );
 
-  const defaultValue = useMemo(() => {
+  const defaultValue: string[] = useMemo(() => {
     return defaultKey ? getValue(defaultKey) : [];
   }, [defaultKey, getValue]);
 

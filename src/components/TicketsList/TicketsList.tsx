@@ -8,10 +8,6 @@ import { ITicketItem } from "../../types/tickets";
 import { getTickets } from "../../redux/tickets/action";
 import { useTickets } from "../../hooks/useTickets";
 
-// interface ITicketsList {
-//   getQueries: GetKeysValuesType;
-// }
-
 const TicketsList: React.FC = () => {
   const dispatch = useDispatch();
   const { tickets, error, isFetching } = useTickets();

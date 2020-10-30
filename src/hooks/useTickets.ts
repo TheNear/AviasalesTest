@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { filterByStops, sortByPrice, sortByTime, sortFilter } from "../assets/js/sortFilter";
+import { DEFAULT_COUNT_TICKETS } from "../assets/js/constants";
+import { filterByStops, sortByPrice, sortByTime } from "../assets/js/sortFilter";
 import { RootState } from "../types/redux";
+import { QueryKeys } from "../types/sortfilter";
 import { ITicketItem } from "../types/tickets";
 import { ParsedQueryR, useQuery } from "./useQuery";
 
@@ -11,46 +13,42 @@ interface UseTicketsReturn {
   error: string;
 }
 
-type UseTicketsType = () => UseTicketsReturn;
+type UseTickets = () => UseTicketsReturn;
 
-const useTickets: UseTicketsType = () => {
-  const { getValues } = useQuery();
+const useTickets: UseTickets = () => {
+  const { getValues } = useQuery<QueryKeys>();
   const tickets = useSelector((state: RootState) => state.tickets.list);
   const isFetching = useSelector((state: RootState) => state.tickets.isFetchingTickets);
   const error = useSelector((state: RootState) => state.tickets.error);
   const [filtredTickets, setFiltredTickets] = useState<ITicketItem[]>([]);
-  const [queryKeys, setQueryKeys] = useState<ParsedQueryR>({});
+  const [values, setValues] = useState<ParsedQueryR>({});
 
   useEffect(() => {
-    setQueryKeys(getValues(["filter", "sort"]));
+    setValues(getValues(["filter", "sort"]));
   }, [getValues]);
 
   useEffect(() => {
-    const sortFunctions = [];
+    const ticketsCopy = [...tickets];
+    const [sortValue] = values.sort || "";
+    const filterValue = values.filter;
 
-    if (queryKeys.sort) {
-      switch (queryKeys.sort[0]) {
-        case "by_time":
-          sortFunctions.push(sortByTime);
-          break;
-        case "by_price":
-          sortFunctions.push(sortByPrice);
-          break;
-        default:
-          sortFunctions.push(sortByPrice);
-          break;
-      }
+    switch (sortValue) {
+      case "by_time":
+        ticketsCopy.sort(sortByTime);
+        break;
+      case "by_price":
+        ticketsCopy.sort(sortByPrice);
+        break;
+      default:
+        ticketsCopy.sort(sortByPrice);
+    }
+
+    if (filterValue) {
+      setFiltredTickets(filterByStops(ticketsCopy, filterValue).slice(0, DEFAULT_COUNT_TICKETS));
     } else {
-      sortFunctions.push(sortByPrice);
+      setFiltredTickets(ticketsCopy.slice(0, DEFAULT_COUNT_TICKETS));
     }
-
-    if (queryKeys.filter) {
-      const stops = Array.isArray(queryKeys.filter) ? queryKeys.filter : [queryKeys.filter];
-      sortFunctions.push(filterByStops(stops));
-    }
-
-    setFiltredTickets(sortFilter(tickets, sortFunctions));
-  }, [tickets, queryKeys]);
+  }, [tickets, values]);
 
   return {
     tickets: filtredTickets,

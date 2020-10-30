@@ -1,8 +1,8 @@
 import { ITicketItem } from "../../types/tickets";
 
 export enum TicketsSortTypes {
-  BY_PRICE = "BY_PRICE",
-  BY_SPEED = "BY_SPEED",
+  BY_PRICE = "by_price",
+  BY_SPEED = "by_time",
 }
 
 export interface ITicketsState {
