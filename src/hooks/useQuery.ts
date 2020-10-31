@@ -9,14 +9,14 @@ type HasValue = (key: string | string[] | undefined | null | boolean, value: str
 type ToggleValue<A = string> = (key: A, value: string, toggle?: boolean) => void;
 type GetValue<A = string> = (key: A) => string[];
 type SetValue<A = string> = (key: A, value: string | string[]) => void;
-type GetValues<A = string> = (keys: A[]) => ParsedQueryR;
+type GetValues<A extends string = string> = (keys: A[]) => ParsedQueryR<A>;
 type PushQuery = (query: ParsedQuery) => void;
 
-export interface ParsedQueryR {
-  [key: string]: string[];
-}
+export type ParsedQueryR<T extends string = string> = {
+  [key in T]: string[];
+};
 
-interface UseQueryR<T> {
+interface UseQueryR<T extends string> {
   hasValue: HasValue;
   toggleValue: ToggleValue<T>;
   getValue: GetValue<T>;
@@ -53,7 +53,7 @@ const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<
       return keys.reduce((acc, cur) => {
         const value = makeArray(queries[cur]);
         return value ? { ...acc, [cur]: value } : acc;
-      }, {});
+      }, {} as ParsedQueryR<T>);
     },
     [queries]
   );

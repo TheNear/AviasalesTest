@@ -21,7 +21,7 @@ const useTickets: UseTickets = () => {
   const isFetching = useSelector((state: RootState) => state.tickets.isFetchingTickets);
   const error = useSelector((state: RootState) => state.tickets.error);
   const [filtredTickets, setFiltredTickets] = useState<ITicketItem[]>([]);
-  const [values, setValues] = useState<ParsedQueryR>({});
+  const [values, setValues] = useState<ParsedQueryR<QueryKeys>>({} as ParsedQueryR);
 
   useEffect(() => {
     setValues(getValues(["filter", "sort"]));
@@ -29,7 +29,7 @@ const useTickets: UseTickets = () => {
 
   useEffect(() => {
     const ticketsCopy = [...tickets];
-    const [sortValue] = values.sort || "";
+    const [sortValue] = values.sort || [];
     const filterValue = values.filter;
 
     switch (sortValue) {
