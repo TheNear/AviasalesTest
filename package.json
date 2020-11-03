@@ -34,6 +34,7 @@
     "format": "prettier --write src/**/*.ts{,x}",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "start": "react-scripts start",
+    "test": "react-scripts test",
     "build": "react-scripts build"
   },
   "eslintConfig": {
