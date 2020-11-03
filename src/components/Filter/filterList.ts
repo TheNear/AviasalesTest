@@ -1,7 +1,9 @@
+import { PossibleFilter } from "../../types/sortfilter";
+
 export interface IFilterItem {
   text: string;
   name: string;
-  value: string;
+  value: PossibleFilter;
 }
 
 export const filterList: IFilterItem[] = [

@@ -4,9 +4,10 @@ import commonStyle from "../../assets/css/common.module.css";
 import CheckBox from "../../componentsHelper/CheckBox/CheckBox";
 import { filterList } from "./filterList";
 import { useQuery } from "../../hooks/useQuery";
+import { FilterQuery } from "../../types/sortfilter";
 
 const Filter: React.FC = () => {
-  const { defaultValue, toggleValue, setValue } = useQuery("filter");
+  const { defaultValue, toggleValue, setValue } = useQuery<FilterQuery>("filter");
 
   return (
     <div className={style.filter}>

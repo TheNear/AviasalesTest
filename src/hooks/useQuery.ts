@@ -6,17 +6,25 @@ import { makeArray } from "../assets/js/helpers";
 const parseOption: ParseOptions = { arrayFormat: "comma" };
 
 type HasValue = (key: string | string[] | undefined | null | boolean, value: string) => boolean;
-type ToggleValue<A = string> = (key: A, value: string, toggle?: boolean) => void;
-type GetValue<A = string> = (key: A) => string[];
-type SetValue<A = string> = (key: A, value: string | string[]) => void;
-type GetValues<A extends string = string> = (keys: A[]) => ParsedQueryR<A>;
+type ToggleValue<T, A = Extract<keyof T, string>> = (
+  key: A,
+  value: string,
+  toggle?: boolean
+) => void;
+type GetValue<T, A = Extract<keyof T, string>> = (key: A) => string[];
+type SetValue<T, A = Extract<keyof T, string>> = (key: A, value: string | string[]) => void;
+type GetValues<T, A = Extract<keyof T, string>> = (keys: A[]) => ParsedQueryR<T>;
 type PushQuery = (query: ParsedQuery) => void;
 
-export type ParsedQueryR<T extends string = string> = {
-  [key in T]: string[];
+export type ParsedQueryR<T = PossibleQueries> = {
+  [K in keyof T]: T[K];
 };
 
-interface UseQueryR<T extends string> {
+type PossibleQueries = {
+  [key: string]: string[];
+};
+
+interface UseQueryR<T> {
   hasValue: HasValue;
   toggleValue: ToggleValue<T>;
   getValue: GetValue<T>;
@@ -25,7 +33,12 @@ interface UseQueryR<T extends string> {
   defaultValue: string[];
 }
 
-const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<T> => {
+const useQuery = <
+  T extends PossibleQueries,
+  A extends Extract<keyof T, string> = Extract<keyof T, string>
+>(
+  defaultKey?: A
+): UseQueryR<T> => {
   const history = useHistory();
   const location = useLocation();
   const [queries, setQueries] = useState<ParsedQuery>({});
@@ -52,7 +65,7 @@ const useQuery = <T extends string, A extends T = T>(defaultKey?: A): UseQueryR<
     (keys) => {
       return keys.reduce((acc, cur) => {
         const value = makeArray(queries[cur]);
-        return value ? { ...acc, [cur]: value } : acc;
+        return value ? { ...acc, [cur]: value || [] } : acc;
       }, {} as ParsedQueryR<T>);
     },
     [queries]
