@@ -8,7 +8,7 @@ import { ITicketItem } from "../types/tickets";
 import { ParsedQueryR, useQuery } from "./useQuery";
 
 interface UseTicketsReturn {
-  tickets: ITicketItem[];
+  data: ITicketItem[];
   isFetching: boolean;
   error: string;
 }
@@ -17,10 +17,10 @@ type UseTickets = () => UseTicketsReturn;
 
 const useTickets: UseTickets = () => {
   const { getValues } = useQuery<SortFilterQuery>();
-  const tickets = useSelector((state: RootState) => state.tickets.list);
+  const data = useSelector((state: RootState) => state.tickets.list);
   const isFetching = useSelector((state: RootState) => state.tickets.isFetchingTickets);
   const error = useSelector((state: RootState) => state.tickets.error);
-  const [filtredTickets, setFiltredTickets] = useState<ITicketItem[]>([]);
+  const [filtredData, setFiltredData] = useState<ITicketItem[]>([]);
   const [values, setValues] = useState<ParsedQueryR<SortFilterQuery>>(
     {} as ParsedQueryR<SortFilterQuery>
   );
@@ -30,7 +30,7 @@ const useTickets: UseTickets = () => {
   }, [getValues]);
 
   useEffect(() => {
-    const ticketsCopy = [...tickets];
+    const ticketsCopy = [...data];
     const [sortValue]: PossibleSort[] = values.sort || [];
     const filterValue: PossibleFilter[] = values.filter;
 
@@ -46,14 +46,14 @@ const useTickets: UseTickets = () => {
     }
 
     if (filterValue) {
-      setFiltredTickets(filterByStops(ticketsCopy, filterValue).slice(0, DEFAULT_COUNT_TICKETS));
+      setFiltredData(filterByStops(ticketsCopy, filterValue).slice(0, DEFAULT_COUNT_TICKETS));
     } else {
-      setFiltredTickets(ticketsCopy.slice(0, DEFAULT_COUNT_TICKETS));
+      setFiltredData(ticketsCopy.slice(0, DEFAULT_COUNT_TICKETS));
     }
-  }, [tickets, values]);
+  }, [data, values]);
 
   return {
-    tickets: filtredTickets,
+    data: filtredData,
     isFetching,
     error,
   };

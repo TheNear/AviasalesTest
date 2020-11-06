@@ -10,7 +10,7 @@ import { useTickets } from "../../hooks/useTickets";
 
 const TicketsList: React.FC = () => {
   const dispatch = useDispatch();
-  const { tickets, error, isFetching } = useTickets();
+  const { data, error, isFetching } = useTickets();
 
   const getTicketsList = useCallback(() => {
     dispatch(getTickets());
@@ -22,7 +22,7 @@ const TicketsList: React.FC = () => {
     <ul className={style.tickets}>
       {isFetching && <Loader />}
       {!isFetching && error && <Error refreshTicketsList={getTicketsList} />}
-      {tickets.map((ticket: ITicketItem) => (
+      {data.map((ticket: ITicketItem) => (
         <Ticket
           key={`${ticket.price}${ticket.segments[0].date}${ticket.carrier}`}
           ticket={ticket}
